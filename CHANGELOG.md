@@ -12,21 +12,14 @@ remains `nexo-agent-kit`; the command remains `nexo`.
 - Per-run provider, requested model, profile and elapsed-time records.
 - Opt-in live provider smoke with four coordinator-owned acceptance cases.
 - English/Spanish repository entry points, contribution templates and CI.
-- Reproducible source archive and checks for public inventory and evidence.
+- Reproducible source archive and public inventory checks.
 
 ### Fixed
 
 - Multiline provider error envelopes cannot silently count as successful runs.
 - Ambiguous CLI routing and incomplete route maps fail before task claims.
-- Git preserves the exact bytes of the published live-generated artifact.
 - Windows test fixtures normalize short paths and compare ACL inheritance
   against a native sibling, keeping the suite portable across runner hosts.
-
-### Validation and limits
-
-288 local tests passed on Windows/Python 3.13 before publication. Codex completed
-one real repair; Claude/Gemini live runs and comparative model evaluations remain
-pending. Check GitHub Actions for the current remote matrix results.
 
 ## 1.2.2 — imported foundation
 

@@ -420,7 +420,7 @@ La demostración usa un ejecutor local controlado; no llama a Claude, Codex ni u
 
 La suite cubre estados/dependencias, reclamaciones concurrentes, tokens obsoletos, persistencia, memoria/contexto, instalación, protocolo MCP, checks y runner mediante procesos reales de prueba. La existencia de esos tests y una ejecución con workers controlados no equivale a una prueba de calidad del modelo.
 
-Los resultados de esta distribución se documentan en [VERIFICATION.md](VERIFICATION.md). Los informes históricos de otros proyectos no se redistribuyen como evidencia actual.
+Consulta los comandos de desarrollo en [VERIFICATION.md](VERIFICATION.md). Conserva los resultados de tus ejecuciones en el estado local del proyecto.
 
 ## Investigación, procedencia y límites
 

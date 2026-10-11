@@ -10,4 +10,3 @@ recursive-include examples *.py
 recursive-include tests *.py
 recursive-include scripts *.py
 recursive-include scripts *.cjs
-recursive-include docs/evidence *.py

@@ -1,14 +1,14 @@
-![BetterChat — coding agents, coordinated and verified](docs/assets/banner.svg)
+![BetterChat — coding agents, working together](docs/assets/banner.svg)
 
 # BetterChat
 
-**Bring coding agents together. Keep the evidence.**
+**Your coding agents. One workflow.**
 
 [![CI](https://github.com/Israelcodigo/betterchat/actions/workflows/ci.yml/badge.svg)](https://github.com/Israelcodigo/betterchat/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-14b8a6)](LICENSE)
 
-[Español](README.es.md) · [Quick start](#quick-start) · [Evidence](docs/VERIFICATION.md) · [Contributing](CONTRIBUTING.md)
+[Español](README.es.md) · [Quick start](#quick-start) · [Development](docs/VERIFICATION.md) · [Contributing](CONTRIBUTING.md)
 
 BetterChat is a local orchestration toolkit for **coding agents**, powered by
 the **Nexo engine**. Assign tasks to Codex, Claude Code, Gemini CLI or a custom
@@ -25,7 +25,7 @@ marked done. It is a developer CLI and local dashboard, not a chat application.
 | Task-specific providers | Explicit provider/model profiles, with no silent fallback |
 | Durable coordination | Task dependencies, leases, bounded retries and resumable local state |
 | Isolated changes | One Git worktree per task, with explicit integration |
-| Evidence before completion | Check logs and receipts tied to the verified content |
+| Configurable checks | Project-defined commands before task completion |
 | Context and memory | Searchable project records, checkpoints and reviewed learning candidates |
 | Client integration | Nine skills, four base roles, MCP, hooks and a local dashboard |
 
@@ -59,7 +59,7 @@ fails and repairs one, verifies dependencies, and integrates the result. It prin
 where the retained evidence lives. **Its workers are deterministic test programs;
 no language model or credential is used.**
 
-Run the tests and inspect the published evidence:
+Run the development checks:
 
 ```shell
 python -B -m unittest discover -s tests -v
@@ -119,27 +119,6 @@ Also accepts `claude`, `gemini` and `--model ID`. This consumes account usage.
 Four acceptance cases run from the coordinator, outside the worker's worktree.
 Missing clients and provider errors are reported as failures.
 
-## What has been verified
-
-| Surface | Evidence in this candidate |
-|---|---|
-| Runtime and integrations | 288 local automated tests passed on Windows / Python 3.13 |
-| Offline workflow | Three tasks, controlled failure/retry, worktrees and integration |
-| Codex CLI | One real repair; four acceptance cases passed in 38.5 seconds |
-| Claude Code / Gemini CLI | Adapter contract tests; live integration **not yet verified** |
-| Custom/local models | Explicit command bridge tested with a fixture, not a local LLM |
-| Packaging | Wheel installation, archive audit and Git evidence-byte roundtrip checked |
-
-The CI badge above reports the current remote run. The table describes the
-documented local evidence; it is not a promise that every platform or model works.
-See the [verification report](docs/VERIFICATION.md),
-[filtered live result](docs/evidence/codex-smoke.json) and
-[generated artifact](docs/evidence/normalize.py).
-
-**Combining providers has not yet been shown to outperform an individual model.**
-The [evaluation protocol](docs/EVALUATION.md) defines that comparison. BetterChat
-coordinates existing agents; it does not merge model weights or train models.
-
 ## Project guide
 
 | Resource | Contents |
@@ -155,9 +134,8 @@ coordinates existing agents; it does not merge model weights or train models.
 
 ## Contribute
 
-Useful next contributions include authenticated Claude/Gemini smoke runs,
-cross-platform fixes, English documentation, and budget-matched comparative
-evaluations. [Open an issue](https://github.com/Israelcodigo/betterchat/issues/new/choose)
+Contributions are welcome: provider integrations, cross-platform improvements,
+documentation, and reproducible bug reports. [Open an issue](https://github.com/Israelcodigo/betterchat/issues/new/choose)
 with a reproducible case or send a focused pull request.
 
 Project state and logs stay in `.nexo/`, excluded from Git. Worktrees isolate

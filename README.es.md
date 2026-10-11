@@ -1,4 +1,4 @@
-![BetterChat: agentes coordinados y resultados verificables](docs/assets/banner.svg)
+![BetterChat: un flujo de trabajo para tus agentes](docs/assets/banner.svg)
 
 # BetterChat
 
@@ -8,14 +8,13 @@
 El paquete sigue llamándose `nexo-agent-kit` y el comando sigue siendo `nexo`.
 Es una herramienta para coordinar agentes de programación, con CLI y panel local.
 
-**Distintos modelos. Un estado de proyecto. Resultados verificables.**
+**Tus agentes de programación. Un único flujo de trabajo.**
 
 Nexo coordina trabajo de programación entre clientes de modelos: tareas con
 dependencias, perfiles por tarea, worktrees Git, ejecución acotada, checks,
 memoria local y recuperación. Python 3.11+, sin dependencias de runtime.
 
-Versión candidata **1.3.0rc1**. Windows es la plataforma comprobada localmente.
-La CI incluye Linux; su resultado remoto debe comprobarse tras publicar.
+Versión candidata **1.3.0rc1**, en desarrollo activo.
 
 ## Pruébalo sin claves ni modelos
 
@@ -37,12 +36,12 @@ y devuelve dónde consultar los recibos. **Usa ejecutores de prueba, no modelos.
 Cada tarea puede usar un perfil con su propio proveedor y modelo. El identificador
 del modelo es explícito o se hereda del cliente; Nexo no inventa cuál es «el mejor».
 
-| Ejecutor | Integración | Evidencia de esta entrega |
-|---|---|---|
-| OpenAI Codex CLI | Nativa; sandbox `workspace-write` | Prueba real en [verificación](docs/VERIFICATION.md) |
-| Anthropic Claude Code | Nativa; permisos del cliente | Contrato local; falta prueba real |
-| Google Gemini CLI | Nativa, modo no interactivo | Contrato local; falta prueba real |
-| Otros / modelos locales | Comando explícito con argv y stdin | Proceso de prueba; requiere un agente que edite archivos |
+| Ejecutor | Integración |
+|---|---|
+| OpenAI Codex CLI | Cliente nativo con sandbox `workspace-write` |
+| Anthropic Claude Code | Cliente nativo con sus propios permisos |
+| Google Gemini CLI | Cliente nativo en modo no interactivo |
+| Otros / modelos locales | Comando explícito con argv y stdin; requiere un agente que edite archivos |
 
 Un ejemplo de rutas para tareas existentes llamadas `implement` y `review`:
 
@@ -89,18 +88,6 @@ Para skills, roles, hooks, MCP y panel, consulta el [manual](docs/MANUAL.md).
 El estado vive en `.nexo/` y no se publica. La integración nativa de skills y hooks
 está orientada a Codex y Claude; el adaptador Gemini ejecuta tareas, no instala
 integraciones de cliente.
-
-## Qué queda demostrado
-
-Un trabajador con salida cero aún debe superar los checks para llegar a `done`.
-Los recibos identifican contenido y configuración, y se rechazan si cambian.
-Los tests cubren dependencias, leases, fallos, cancelación, instalación y rutas.
-Consulta [resultados y límites](docs/VERIFICATION.md).
-
-**No hay todavía evidencia de que mezclar proveedores supere al mejor modelo
-individual.** El [protocolo de evaluación](docs/EVALUATION.md) define cómo medirlo
-con tareas iguales, presupuestos comparables y pruebas externas. El proyecto no
-fusiona pesos ni entrena modelos.
 
 ## Contribuir
 

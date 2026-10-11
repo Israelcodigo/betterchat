@@ -15,7 +15,7 @@ from scripts.native_fixture import create_native_fixture
 class NativeFixtureTests(unittest.TestCase):
     def test_collision_is_not_reused_or_overwritten(self):
         with tempfile.TemporaryDirectory() as directory:
-            parent = Path(directory)
+            parent = Path(directory).resolve()
             collision, fresh = uuid.uuid4(), uuid.uuid4()
             occupied = parent / ('probe-' + collision.hex)
             occupied.mkdir()
@@ -28,7 +28,7 @@ class NativeFixtureTests(unittest.TestCase):
 
     def test_collision_limit_is_finite_and_preserves_existing_file(self):
         with tempfile.TemporaryDirectory() as directory:
-            parent, identity = Path(directory), uuid.uuid4()
+            parent, identity = Path(directory).resolve(), uuid.uuid4()
             occupied = parent / ('probe-' + identity.hex)
             occupied.write_text('keep', encoding='utf-8')
             with patch('scripts.native_fixture.uuid.uuid4', return_value=identity) as generator:
@@ -46,6 +46,8 @@ class NativeFixtureTests(unittest.TestCase):
     def test_windows_directory_inherits_acl_without_protection(self):
         from ctypes import wintypes
         path = create_native_fixture('nexo-native-acl-test-')
+        reference = path.parent / ('nexo-native-acl-reference-' + uuid.uuid4().hex)
+        reference.mkdir(mode=0o777)
         try:
             api = ctypes.WinDLL('advapi32', use_last_error=True)
             api.GetFileSecurityW.argtypes = [wintypes.LPCWSTR, wintypes.DWORD,
@@ -62,6 +64,19 @@ class NativeFixtureTests(unittest.TestCase):
             control, revision = wintypes.WORD(), wintypes.DWORD()
             self.assertTrue(api.GetSecurityDescriptorControl(buffer, ctypes.byref(control), ctypes.byref(revision)))
             self.assertFalse(control.value & 0x1000, 'Fixture must not set SE_DACL_PROTECTED')
-            self.assertTrue(control.value & 0x0400, 'Fixture must inherit its parent DACL automatically')
+            # AUTO_INHERITED depends on the parent's ACL on the host. Compare
+            # with an ordinary sibling, rather than requiring a host-specific bit.
+            reference_needed = wintypes.DWORD()
+            api.GetFileSecurityW(str(reference), 4, None, 0, ctypes.byref(reference_needed))
+            self.assertGreater(reference_needed.value, 0)
+            reference_buffer = ctypes.create_string_buffer(reference_needed.value)
+            self.assertTrue(api.GetFileSecurityW(str(reference), 4, reference_buffer,
+                                                len(reference_buffer), ctypes.byref(reference_needed)))
+            reference_control = wintypes.WORD()
+            self.assertTrue(api.GetSecurityDescriptorControl(reference_buffer,
+                                                            ctypes.byref(reference_control), ctypes.byref(revision)))
+            self.assertEqual(control.value & 0x1400, reference_control.value & 0x1400,
+                             'Fixture must use the same inheritance flags as a native sibling')
         finally:
+            reference.rmdir()
             path.rmdir()

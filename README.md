@@ -7,7 +7,6 @@
 [![CI](https://github.com/Israelcodigo/betterchat/actions/workflows/ci.yml/badge.svg)](https://github.com/Israelcodigo/betterchat/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-14b8a6)](LICENSE)
-[![Release candidate](https://img.shields.io/badge/status-release%20candidate-eab308)](CHANGELOG.md)
 
 [Español](README.es.md) · [Quick start](#quick-start) · [Evidence](docs/VERIFICATION.md) · [Contributing](CONTRIBUTING.md)
 

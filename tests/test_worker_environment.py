@@ -21,7 +21,7 @@ from nexo_kit.util import write_json
 class WorkerEnvironmentTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-worker-env-')
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.home = self.root / 'user home'
         self.home.mkdir()
         self.source = self.root / 'checkout/nexo_kit/runner.py'

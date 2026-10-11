@@ -20,7 +20,7 @@ from nexo_kit.util import write_json
 class GlobalRuntimeTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-global-runtime-')
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         environment = patch.dict(os.environ, {'CODEX_HOME': str(self.root / 'codex-home')})
         environment.start()
         self.addCleanup(environment.stop)

@@ -52,7 +52,7 @@ class HookCommandTests(unittest.TestCase):
 class WindowsHookLauncherTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-launcher-')
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.safe = self.root / 'safe'
         self.special = self.root / "O'Brien $value %PATH% !literal! & (spaces) é漢"
         source = ("import json,sys\n"

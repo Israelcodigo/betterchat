@@ -16,7 +16,7 @@ ENTRYPOINT = Path(__file__).resolve().parents[1] / 'nexo.py'
 class LearningCliTests(unittest.TestCase):
     def setUp(self):
         self.temporary = tempfile.TemporaryDirectory(prefix='nexo-learning-cli-')
-        self.root = Path(self.temporary.name)
+        self.root = Path(self.temporary.name).resolve()
         self.project = self.root / 'Proyecto café 漢'
         self.project.mkdir()
         self.profile = self.root / "Perfil O'Brien $literal"

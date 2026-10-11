@@ -21,7 +21,7 @@ from nexo_kit import dashboard
 class DashboardLaunchTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-launch-test-')
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.project = self.root / 'project with spaces'
         self.project.mkdir()
         self.home = self.root / 'disposable Codex profile'

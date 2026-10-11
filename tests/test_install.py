@@ -18,7 +18,7 @@ from nexo_kit.util import atomic_write
 class InstallTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix="nexo-install-")
-        self.project = Path(self.tmp.name) / "project spaces O'Brien $nexo_test"
+        self.project = Path(self.tmp.name).resolve() / "project spaces O'Brien $nexo_test"
         self.project.mkdir()
 
     def tearDown(self):

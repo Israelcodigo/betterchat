@@ -19,6 +19,8 @@ remains `nexo-agent-kit`; the command remains `nexo`.
 - Multiline provider error envelopes cannot silently count as successful runs.
 - Ambiguous CLI routing and incomplete route maps fail before task claims.
 - Git preserves the exact bytes of the published live-generated artifact.
+- Windows test fixtures normalize short paths and compare ACL inheritance
+  against a native sibling, keeping the suite portable across runner hosts.
 
 ### Validation and limits
 

@@ -22,7 +22,7 @@ from nexo_kit.util import atomic_write, write_json
 class PersonalInstallTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-personal-')
-        self.home = Path(self.tmp.name) / "Codex profile O'Brien $nexo_test"
+        self.home = Path(self.tmp.name).resolve() / "Codex profile O'Brien $nexo_test"
         self.home.mkdir()
 
     def tearDown(self):
@@ -203,7 +203,7 @@ class PersonalInstallTests(unittest.TestCase):
                      'hooks.json': b'{\r\n  "userOption": true\r\n}\r\n'}
         for name, content in originals.items():
             (self.home / name).write_bytes(content)
-        project = Path(self.tmp.name) / 'actual-project'
+        project = Path(self.tmp.name).resolve() / 'actual-project'
         with Store(project) as store:
             task = store.add_task('Keep me')
         install_personal(self.home)
@@ -237,7 +237,7 @@ class PersonalInstallTests(unittest.TestCase):
         environment.pop('PYTHONPATH', None)
         environment['PYTHONUTF8'] = '1'
         for name in ('alpha', 'beta'):
-            project = Path(self.tmp.name) / name
+            project = Path(self.tmp.name).resolve() / name
             write_json(project / '.nexo/config.json', defaults())
             with Store(project) as store:
                 store.add_task(name + ' task')

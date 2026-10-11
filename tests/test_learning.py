@@ -18,7 +18,7 @@ from nexo_kit.util import digest
 class LearningTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-learning-')
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.project = self.root / 'project'
         self.project.mkdir()
         (self.project / '.nexo').mkdir()

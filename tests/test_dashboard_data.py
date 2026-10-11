@@ -18,7 +18,7 @@ from nexo_kit import learning, __version__
 class DashboardDataTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory(prefix='nexo-dashboard-data-')
-        self.root = Path(self.tmp.name)
+        self.root = Path(self.tmp.name).resolve()
         self.home = self.root / 'Codex home'
         self.project = self.root / 'First project'
         self.home.mkdir()

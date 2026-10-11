@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <meta name="description" content="Tu espacio local para consultar las skills, agentes y aprendizaje de Nexo.">
+  <title>Nexo · Tu espacio de trabajo</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Saltar al contenido</a>
+  <aside class="sidebar" aria-label="Navegación principal">
+    <a class="brand" href="#" aria-label="Nexo, resumen"><span class="brand-mark" aria-hidden="true">n</span><span>Nexo<span class="brand-caption">WORKSPACE</span></span></a>
+    <div class="sidebar-label">TU ESPACIO</div>
+    <nav id="navigation"></nav>
+    <div class="sidebar-bottom">
+      <div class="local-label"><span class="status-dot"></span>Todo ocurre en local</div>
+      <p>Tu conocimiento, conectado.<br>Siempre en tu equipo.</p>
+      <div class="sidebar-version">NEXO <span id="version">PANEL LOCAL</span></div>
+    </div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <div class="breadcrumb"><span>Workspace</span><span aria-hidden="true">/</span><strong id="current-view">Resumen</strong></div>
+      <div class="topbar-actions">
+        <label class="search-box"><span id="search-icon" aria-hidden="true"></span><input id="search" type="search" placeholder="Buscar en tu espacio…" autocomplete="off" aria-label="Buscar en la vista actual"><kbd>/</kbd></label>
+        <div class="profile-avatar" title="Espacio local" aria-hidden="true">N</div>
+      </div>
+    </header>
+    <main id="main" tabindex="-1">
+      <div class="page-heading">
+        <div><div class="eyebrow">TU CONOCIMIENTO, EN UN SOLO LUGAR</div><h1 id="page-title">Una vista de conjunto.</h1><p id="page-description">Explora tus capacidades y sigue cómo aprende Nexo.</p></div>
+        <div class="project-controls"><label class="project-picker"><span id="project-icon" aria-hidden="true"></span><span class="sr-only">Filtrar por proyecto</span><select id="project-select"><option value="">Todos los proyectos</option></select></label><button class="icon-button" id="add-project" title="Añadir proyecto" aria-label="Añadir proyecto">+</button></div>
+      </div>
+      <div id="connection-banner" class="connection-banner" hidden role="status"></div>
+      <div id="content" aria-busy="true"><div class="loading-state"><span class="loading-dot"></span>Cargando tu espacio local…</div></div>
+      <footer class="page-footer"><span class="refresh-status"><span id="connection-dot" class="status-dot"></span><span id="refresh-label">Conectando con Nexo…</span></span><div><button class="text-button" id="refresh-now">Actualizar</button><span class="footer-separator" aria-hidden="true">·</span><button class="text-button" id="pause-updates" aria-pressed="false">Pausar actualizaciones</button></div></footer>
+    </main>
+  </div>
+  <dialog id="details-dialog" class="detail-dialog" aria-labelledby="detail-title">
+    <div class="drawer-heading"><span class="eyebrow" id="detail-kind">SKILL</span><button class="icon-button close-dialog" aria-label="Cerrar detalles">×</button></div>
+    <div class="drawer-body"><div id="detail-icon" class="detail-icon"></div><h2 id="detail-title"></h2><p id="detail-description" class="detail-description"></p><div id="detail-badges" class="badge-row"></div><div id="detail-metadata" class="detail-metadata"></div><div class="instructions-heading"><h3 id="instructions-label">Instrucciones completas</h3><button id="copy-instructions" class="secondary-button">Copiar instrucciones</button></div><pre id="detail-instructions" class="instructions-content" tabindex="0"></pre></div>
+    <div class="drawer-footer"><span>Consulta local · Solo lectura</span><button id="copy-name" class="secondary-button">Copiar nombre</button></div>
+  </dialog>
+  <dialog id="project-dialog" class="project-dialog" aria-labelledby="project-dialog-title">
+    <form id="project-form"><div class="modal-heading"><div class="entity-icon">+</div><button class="icon-button close-dialog" type="button" aria-label="Cerrar formulario">×</button></div><h2 id="project-dialog-title">Conecta un proyecto.</h2><p>Añade una carpeta para consultar su estado Nexo junto al resto de tu espacio.</p><label for="project-path">Ruta de la carpeta</label><input id="project-path" name="path" required placeholder="C:\Users\tu-usuario\proyecto" spellcheck="false" autocomplete="off" aria-describedby="project-help project-error"><p id="project-help" class="field-help">El panel registra la ruta. No inicializa Nexo ni modifica los archivos del proyecto.</p><p id="project-error" class="form-error" role="alert" hidden></p><div class="modal-actions"><button type="button" class="secondary-button close-dialog">Cancelar</button><button id="submit-project" type="submit" class="primary-button">Añadir proyecto</button></div></form>
+  </dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

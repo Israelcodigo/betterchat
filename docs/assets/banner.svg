@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-labelledby="title desc">
+  <title id="title">BetterChat — coding agents, coordinated and verified</title>
+  <desc id="desc">Dark navy banner with three connected agent nodes leading to a verified result. Powered by Nexo.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#0b1220"/><stop offset="1" stop-color="#152b3e"/></linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#416077" stroke-opacity=".17"/></pattern>
+  </defs>
+  <rect width="1280" height="360" rx="20" fill="url(#bg)"/>
+  <rect width="1280" height="360" rx="20" fill="url(#grid)"/>
+  <g font-family="Segoe UI,Arial,sans-serif">
+    <rect x="56" y="46" width="188" height="29" rx="14" fill="#193d43"/>
+    <text x="73" y="66" font-size="12" letter-spacing="2" fill="#8ce7d3">POWERED BY NEXO</text>
+    <text x="54" y="160" font-size="68" font-weight="700" letter-spacing="-2" fill="#f2f7fa">BetterChat</text>
+    <text x="58" y="213" font-size="25" fill="#c4d5df">Coding agents, coordinated and verified.</text>
+    <text x="58" y="292" font-size="14" letter-spacing="2" fill="#8ce7d3">EXPLICIT ROUTING  /  LOCAL STATE  /  REAL CHECKS</text>
+    <g fill="none" stroke="#61cfb9" stroke-width="2">
+      <path d="M880 88H943V180H996M880 180H996M880 272H943V180"/>
+      <path d="M1100 180H1172"/>
+    </g>
+    <g fill="#142b3a" stroke="#47687d">
+      <rect x="758" y="60" width="122" height="56" rx="12"/>
+      <rect x="758" y="152" width="122" height="56" rx="12"/>
+      <rect x="758" y="244" width="122" height="56" rx="12"/>
+    </g>
+    <g fill="#d8e8ef" font-size="15" text-anchor="middle">
+      <text x="819" y="94">BUILD</text><text x="819" y="186">REVIEW</text><text x="819" y="278">VERIFY</text>
+    </g>
+    <rect x="996" y="128" width="104" height="104" rx="25" fill="#183f43" stroke="#61cfb9" stroke-width="2"/>
+    <path d="m1022 180 18 18 34-37" fill="none" stroke="#91f1d8" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="1180" cy="180" r="8" fill="#91f1d8"/>
+    <text x="1048" y="265" text-anchor="middle" font-size="12" letter-spacing="2" fill="#a9c5d1">EVIDENCE</text>
+  </g>
+</svg>

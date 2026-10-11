@@ -1,0 +1,504 @@
+{
+  "schema_version": 1,
+  "report": "Investigación adicional para kit unificado Claude Code y Codex CLI en Windows",
+  "consulted_date": "2026-10-10",
+  "timezone": "Europe/Madrid",
+  "method": {
+    "git": "Clones superficiales con filter=blob:none,no-checkout; log HEAD + ls-tree + git show de README, licencia, módulos y tests concretos; no código upstream ejecutado",
+    "web": "Páginas públicas GitHub consultadas",
+    "api": "GET api.github.com/repos devolvió 403 rate limit para los 5 repos",
+    "stats": "Estrellas redondeadas observadas en interfaz pública; exactas y pushed_at no revalidados",
+    "definitions": "implementation=se leyó código, no implica ejecución; skill_instructions=solo instrucciones del modelo; documentation=afirmación de README/doc sin prueba runtime"
+  },
+  "design_decisions": [
+    {
+      "feature": "Planificación durable",
+      "source": "Beads + CCH",
+      "choose": "Una fuente de verdad transaccional para estados/dependencias; documentos como vistas y criterios, evitando dos trackers contradictorios."
+    },
+    {
+      "feature": "Aprendizaje",
+      "source": "Compound + Hermes",
+      "choose": "Candidatos con evidencia y metadatos, deduplicación, promoción y retirada; no convertir cada log en regla."
+    },
+    {
+      "feature": "Verificación",
+      "source": "Matt + CCH",
+      "choose": "Tests públicos por comportamiento y revisión independiente; bloquear completitud cuando faltan evidencias requeridas."
+    },
+    {
+      "feature": "Contexto",
+      "source": "Hermes + Compound",
+      "choose": "Índice y búsqueda limitada antes de leer detalle; recuperación del conocimiento al planificar y revisar."
+    },
+    {
+      "feature": "Autoridad",
+      "source": "Análisis propio",
+      "choose": "Hooks orientan y auditan solo los eventos conectados; no reemplazan permisos ni sandbox del host."
+    }
+  ],
+  "repositories": [
+    {
+      "repo": "EveryInc/compound-engineering-plugin",
+      "url": "https://github.com/EveryInc/compound-engineering-plugin",
+      "sha": "67035e931c5cb26e80f198a7019a4502a9788273",
+      "commit_date": "2026-10-07T16:40:10-07:00",
+      "license": "MIT",
+      "license_file": "LICENSE",
+      "stars_display": "25.4k",
+      "tree_files": 1492,
+      "read_files": [
+        "README.md",
+        "LICENSE",
+        ".codex-plugin/plugin.json",
+        "skills/ce-compound/SKILL.md",
+        "skills/ce-compound/references/schema.yaml",
+        "skills/ce-compound/scripts/validate-doc-claims.py",
+        "skills/ce-code-review/references/personas/learnings-researcher.md"
+      ],
+      "verified_features": [
+        {
+          "feature": "36 skills y ciclo de seis pasos",
+          "level": "structure_and_documentation",
+          "mechanism": "36 rutas skills/*/SKILL.md verificadas. El flujo encadena brainstorm, plan, work, simplify, code-review y compound. Los revisores especializados son assets locales de prompts, con manifiesto nativo Codex.",
+          "evidence": "skills/ce-compound/SKILL.md",
+          "evidence_url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-compound/SKILL.md"
+        },
+        {
+          "feature": "Aprendizaje durable selectivo",
+          "level": "skill_instructions",
+          "mechanism": "Solo documenta problemas resueltos y verificados cuyo razonamiento no sea ya recuperable del código/tests/docs. Una nota por ejecución; actualiza notas existentes en vez de duplicar y puede no escribir nada.",
+          "evidence": "skills/ce-compound/SKILL.md",
+          "evidence_url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-compound/SKILL.md"
+        },
+        {
+          "feature": "Memoria recuperada durante planificación/revisión",
+          "level": "skill_instructions",
+          "mechanism": "Consulta glosario y corpus docs/solutions, extrae términos por dimensiones, filtra con grep, lee candidatos y distingue patrones históricos de defectos observados en el diff.",
+          "evidence": "skills/ce-code-review/references/personas/learnings-researcher.md",
+          "evidence_url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-code-review/references/personas/learnings-researcher.md"
+        },
+        {
+          "feature": "Metadatos y validación de conocimiento",
+          "level": "implementation",
+          "mechanism": "Schema de dos tracks bug/knowledge con applies_when/tags y retire_when opcional. Un script stdlib verifica referencias a rutas y commits locales, devuelve flags para adjudicación; no comprueba verdad semántica.",
+          "evidence": "skills/ce-compound/scripts/validate-doc-claims.py",
+          "evidence_url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-compound/scripts/validate-doc-claims.py"
+        }
+      ],
+      "selection": "Reimplementar notas de aprendizaje con evidencia, alcance, estado y condición de retirada, recuperadas al planificar y revisar; preferible a escribir memoria automáticamente por cada tarea.",
+      "not_selected": [
+        "Pipeline lfg que publica/pushea por defecto cuando existe remoto; el kit debe conservar autorización explícita de efectos externos.",
+        "No importar 36 skills completas ni duplicar sus prompts de planificación."
+      ],
+      "limits": [
+        "No instalado/ejecutado. Las skills orientan al modelo: no son por sí mismas gates de runtime.",
+        "README afirma 14 hosts; no se probó paridad ni Windows nativo.",
+        "Compounding no es una obligación de crear una nota en cada ciclo."
+      ],
+      "contradictions": [
+        {
+          "extra_claim": "Último push 10-10-2026; aprendizaje obligatorio.",
+          "finding": "HEAD main inspeccionado tiene commit de 07-10-2026 (08-10 UTC); push de otra rama no equivale a commit HEAD. ce-compound explícitamente escribe nada cuando no cumple el criterio de durabilidad."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/README.md"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/LICENSE"
+        },
+        {
+          "path": ".codex-plugin/plugin.json",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/.codex-plugin/plugin.json"
+        },
+        {
+          "path": "skills/ce-compound/SKILL.md",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-compound/SKILL.md"
+        },
+        {
+          "path": "skills/ce-compound/references/schema.yaml",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-compound/references/schema.yaml"
+        },
+        {
+          "path": "skills/ce-compound/scripts/validate-doc-claims.py",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-compound/scripts/validate-doc-claims.py"
+        },
+        {
+          "path": "skills/ce-code-review/references/personas/learnings-researcher.md",
+          "url": "https://github.com/EveryInc/compound-engineering-plugin/blob/67035e931c5cb26e80f198a7019a4502a9788273/skills/ce-code-review/references/personas/learnings-researcher.md"
+        }
+      ]
+    },
+    {
+      "repo": "Chachamaru127/claude-code-harness",
+      "url": "https://github.com/Chachamaru127/claude-code-harness",
+      "sha": "2b2b74805321089bd9b660a1064fa97556299703",
+      "commit_date": "2026-09-06T11:54:44+09:00",
+      "license": "MIT",
+      "license_file": "LICENSE.md",
+      "stars_display": "3.2k",
+      "tree_files": 1752,
+      "read_files": [
+        "README.md",
+        "LICENSE.md",
+        ".claude-plugin/hooks.json",
+        "docs/hardening-parity.md",
+        "go/cmd/harness/policy.go",
+        "go/internal/guardrail/pre_tool.go"
+      ],
+      "verified_features": [
+        {
+          "feature": "Contrato y gates de entrega",
+          "level": "documentation",
+          "mechanism": "spec.md y Plans.md recogen alcance/criterios/dependencias/incógnitas; plan/work/review/sync/release producen evidencia por criterio. Major findings bloquean completitud, revisión separada de implementación.",
+          "evidence": "README.md",
+          "evidence_url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/README.md"
+        },
+        {
+          "feature": "Núcleo Go compartido de política",
+          "level": "implementation",
+          "mechanism": "harness policy check lee JSON PreToolUse, verifica integridad del deny surface y evalúa mismo kernel que los hooks. Exit 2=deny, 1=input inválido, 3=superficie debilitada. El entrypoint explícito falla cerrado ante parse inválido.",
+          "evidence": "go/cmd/harness/policy.go",
+          "evidence_url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/go/cmd/harness/policy.go"
+        },
+        {
+          "feature": "Cobertura asimétrica entre hosts",
+          "level": "implementation_and_documentation",
+          "mechanism": "Manifiesto Claude llama /bin/bash para dispatch al binario. Documento hardening-parity restringe Codex a Bash PreToolUse; otros efectos dependen de gates posteriores y disciplina de worktrees. Scope leash es advertencia por defecto.",
+          "evidence": "docs/hardening-parity.md",
+          "evidence_url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/docs/hardening-parity.md"
+        },
+        {
+          "feature": "Registro e intercambio local de sesiones",
+          "level": "documentation",
+          "mechanism": "Roster resuelto desde git common-dir e inbox entregado en frontera de turno; mensajes envueltos como datos. Verificación de afirmaciones de archivos/commits opcional.",
+          "evidence": "README.md",
+          "evidence_url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/README.md"
+        }
+      ],
+      "selection": "Tomar gates explícitos por criterio, revisión independiente, límites de corrección y decisiones auditables; separar permisos del host de checks de calidad del kit.",
+      "not_selected": [
+        "No reimplementar parser de shell universal ni afirmar que bloquea todos los comandos.",
+        "No copiar modelo/effort fijo ni exigir permisos rutinarios que el usuario ya otorgó.",
+        "No sustituir autorizaciones del usuario por reglas de un repositorio externo."
+      ],
+      "limits": [
+        "No instalado ni ejecutado. Existe bin/harness-windows-amd64.exe, pero la ruta del plugin usa /bin/bash; eso no demuestra soporte nativo sin dependencias.",
+        "El hook fast-path tolera ciertos errores de parse; el propio código lo contrasta con policy check fail-closed.",
+        "Codex App figura candidate, distinto de Codex CLI supported."
+      ],
+      "contradictions": [
+        {
+          "extra_claim": "Último push 05-10; guardrails que validan cada comando.",
+          "finding": "HEAD main observado 06-09-2026. Cobertura real solo alcanza acciones conectadas a hooks y varía por host; no todas las operaciones de Codex."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/README.md"
+        },
+        {
+          "path": "LICENSE.md",
+          "url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/LICENSE.md"
+        },
+        {
+          "path": ".claude-plugin/hooks.json",
+          "url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/.claude-plugin/hooks.json"
+        },
+        {
+          "path": "docs/hardening-parity.md",
+          "url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/docs/hardening-parity.md"
+        },
+        {
+          "path": "go/cmd/harness/policy.go",
+          "url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/go/cmd/harness/policy.go"
+        },
+        {
+          "path": "go/internal/guardrail/pre_tool.go",
+          "url": "https://github.com/Chachamaru127/claude-code-harness/blob/2b2b74805321089bd9b660a1064fa97556299703/go/internal/guardrail/pre_tool.go"
+        }
+      ]
+    },
+    {
+      "repo": "gastownhall/beads",
+      "url": "https://github.com/gastownhall/beads",
+      "sha": "fb09d9f3e476096652fbf31664c281fd53e80757",
+      "commit_date": "2026-10-10T12:36:14Z",
+      "license": "MIT",
+      "license_file": "LICENSE",
+      "stars_display": "27.8k",
+      "tree_files": 4757,
+      "read_files": [
+        "README.md",
+        "LICENSE",
+        "cmd/bd/ready.go",
+        "backend/conformance/ready_claimer_contract.go",
+        "internal/storage/issueops/claim.go"
+      ],
+      "verified_features": [
+        {
+          "feature": "Grafo persistente de tareas y ready",
+          "level": "implementation",
+          "mechanism": "ready excluye in_progress/blocked/deferred/hooked y usa GetReadyWork con semántica de bloqueadores activos. La ruta --claim delega a ReadyClaimer para seleccionar, CAS y devolver fila dentro de una transacción.",
+          "evidence": "cmd/bd/ready.go",
+          "evidence_url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/cmd/bd/ready.go"
+        },
+        {
+          "feature": "Claim atómico e idempotente",
+          "level": "implementation",
+          "mechanism": "Lee fila dentro de transacción, valida actor/estado, hace UPDATE condicionado por row_lock/estado; otro dueño produce ErrAlreadyClaimed. Reclaim del mismo actor no cambia historia. Lease y heartbeat son efímeros separados de assignee/status durables.",
+          "evidence": "internal/storage/issueops/claim.go",
+          "evidence_url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/internal/storage/issueops/claim.go"
+        },
+        {
+          "feature": "Estado versionado en Dolt",
+          "level": "documentation",
+          "mechanism": "Embedded es modo por defecto y single writer; server soporta escritores concurrentes. Sync Dolt push/pull; issues.jsonl es exportación, no fuente de verdad.",
+          "evidence": "README.md",
+          "evidence_url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/README.md"
+        },
+        {
+          "feature": "Contratos por backend",
+          "level": "test_source_inspected",
+          "mechanism": "Suite ReadyClaimer común verifica validación, filters, historia y estado sin mutación en input inválido. No equivale a haber ejecutado pruebas de contención.",
+          "evidence": "backend/conformance/ready_claimer_contract.go",
+          "evidence_url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/backend/conformance/ready_claimer_contract.go"
+        }
+      ],
+      "selection": "Reimplementar DAG+ready+claim transaccional+lease recuperable en SQLite stdlib para Windows local; conservar la separación entre eventos persistentes y latidos efímeros.",
+      "not_selected": [
+        "Dolt/redes/sincronización multi-máquina no necesarios para el kit local.",
+        "Messaging integrado y backend HTTP experimental añaden contratos y divergencias innecesarias."
+      ],
+      "limits": [
+        "No se ejecutó bd ni su suite. Windows figura soportado en README; no verificado en vivo.",
+        "Un claim transaccional local del kit no ofrece cell-level merge ni sincronización Dolt."
+      ],
+      "contradictions": [],
+      "evidence": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/README.md"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/LICENSE"
+        },
+        {
+          "path": "cmd/bd/ready.go",
+          "url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/cmd/bd/ready.go"
+        },
+        {
+          "path": "backend/conformance/ready_claimer_contract.go",
+          "url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/backend/conformance/ready_claimer_contract.go"
+        },
+        {
+          "path": "internal/storage/issueops/claim.go",
+          "url": "https://github.com/gastownhall/beads/blob/fb09d9f3e476096652fbf31664c281fd53e80757/internal/storage/issueops/claim.go"
+        }
+      ]
+    },
+    {
+      "repo": "mattpocock/skills",
+      "url": "https://github.com/mattpocock/skills",
+      "sha": "49dd158d1076134a641b33efb035946536778336",
+      "commit_date": "2026-10-09T11:56:49+01:00",
+      "license": "MIT",
+      "license_file": "LICENSE",
+      "stars_display": "283.6k",
+      "tree_files": 190,
+      "read_files": [
+        "README.md",
+        "LICENSE",
+        ".claude-plugin/plugin.json",
+        "skills/engineering/tdd/SKILL.md",
+        "skills/engineering/to-spec/SKILL.md"
+      ],
+      "verified_features": [
+        {
+          "feature": "Skills de ingeniería componibles",
+          "level": "structure",
+          "mechanism": "38 SKILL.md totales entre engineering/productivity/misc/in-progress; manifiesto Claude enumera 27 skills distribuidas. README documenta Claude y Codex plugin install.",
+          "evidence": ".claude-plugin/plugin.json",
+          "evidence_url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/.claude-plugin/plugin.json"
+        },
+        {
+          "feature": "TDD por interfaces observables",
+          "level": "skill_instructions",
+          "mechanism": "Un test que falla y una implementación por rebanada vertical; evita assertions tautológicas, tests de privados y mocks internos. Prefiere límites públicos de comportamiento.",
+          "evidence": "skills/engineering/tdd/SKILL.md",
+          "evidence_url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/tdd/SKILL.md"
+        },
+        {
+          "feature": "Vocabulario y decisiones reutilizables",
+          "level": "skill_instructions",
+          "mechanism": "Usa GLOSSARY.md y ADR existentes en specs/tests para mantener nombres del dominio y decisiones coherentes.",
+          "evidence": "skills/engineering/to-spec/SKILL.md",
+          "evidence_url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/to-spec/SKILL.md"
+        }
+      ],
+      "selection": "Combinar tests de comportamiento, rebanadas pequeñas y vocabulario compartido con gates ejecutables; son buenas instrucciones complementarias a un runtime.",
+      "not_selected": [
+        "Preguntar autorización para cada seam de test: incompatible con autonomía ya autorizada y añade fricción.",
+        "Publicar la spec al issue tracker automáticamente no está autorizado por pedir construir un kit local.",
+        "No cargar skills in-progress ni misceláneas por defecto."
+      ],
+      "limits": [
+        "Sin motor propio de DAG, memoria ni ejecución: colección de instrucciones.",
+        "No existe .codex-plugin/plugin.json en el árbol inspeccionado; ruta de instalación Codex está documentada, no ejecutada.",
+        "No medimos mejoras de tokens o resultados."
+      ],
+      "contradictions": [
+        {
+          "extra_claim": "Último push 10-10.",
+          "finding": "Commit HEAD main observado 09-10-2026. Push no equivale a commit de rama predeterminada."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/README.md"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/LICENSE"
+        },
+        {
+          "path": ".claude-plugin/plugin.json",
+          "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/.claude-plugin/plugin.json"
+        },
+        {
+          "path": "skills/engineering/tdd/SKILL.md",
+          "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/tdd/SKILL.md"
+        },
+        {
+          "path": "skills/engineering/to-spec/SKILL.md",
+          "url": "https://github.com/mattpocock/skills/blob/49dd158d1076134a641b33efb035946536778336/skills/engineering/to-spec/SKILL.md"
+        }
+      ]
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "url": "https://github.com/NousResearch/hermes-agent",
+      "sha": "f925b01791fe052e7d55dc975750c0bd985aff91",
+      "commit_date": "2026-10-10T04:27:27-07:00",
+      "license": "MIT",
+      "license_file": "LICENSE",
+      "stars_display": "252.4k",
+      "tree_files": 18039,
+      "read_files": [
+        "README.md",
+        "LICENSE",
+        "agent/learn_prompt.py",
+        "agent/learning_mutations.py",
+        "agent/memory_manager.py",
+        "agent/background_review.py",
+        "agent/turn_finalizer.py",
+        "run_agent.py",
+        "tools/skill_manager_tool.py",
+        "tools/session_search_tool.py"
+      ],
+      "verified_features": [
+        {
+          "feature": "Aprendizaje tras turnos",
+          "level": "implementation",
+          "mechanism": "turn_finalizer comprueba intervalo de uso de tools, presencia de skill_manage y estado no interrumpido; lanza fork background del agente con snapshot. Fork tiene whitelist de tools, máximo 16 iteraciones, budget derivado de contexto y prioridad al siguiente turno foreground.",
+          "evidence": "agent/background_review.py",
+          "evidence_url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/background_review.py"
+        },
+        {
+          "feature": "Memoria procedural editable con concurrencia",
+          "level": "implementation",
+          "mechanism": "skill_manage escribe SKILL.md y archivos asociados; locks por hash de nombre preservan transacción read-modify-write; lock múltiple en orden estable evita deadlock. Memorias usan fingerprint para detectar identidades obsoletas.",
+          "evidence": "tools/skill_manager_tool.py",
+          "evidence_url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/tools/skill_manager_tool.py"
+        },
+        {
+          "feature": "Recuperación progresiva de sesiones",
+          "level": "implementation",
+          "mechanism": "session_search usa SQLite FTS5, dedup por lineage, discovery/top-result, scroll alrededor de mensaje, read y browse. Limita tamaño de mensajes y degrada ranking de cron; implementación declara no hacer llamadas LLM.",
+          "evidence": "tools/session_search_tool.py",
+          "evidence_url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/tools/session_search_tool.py"
+        },
+        {
+          "feature": "Creación de skill desde fuentes",
+          "level": "implementation",
+          "mechanism": "/learn construye prompt para agente vivo; fuentes grandes se procesan por unidades y referencias con índice pequeño. Detecta skill existente antes de duplicar.",
+          "evidence": "agent/learn_prompt.py",
+          "evidence_url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/learn_prompt.py"
+        }
+      ],
+      "selection": "Inspiración para aprendizaje explícito y versionado, lectura progresiva y presupuestos; kit mantendrá candidatos y promoción verificable sin incorporar runtime independiente.",
+      "not_selected": [
+        "Gateway Telegram/Slack, cron, siete backends de ejecución, desktop y proveedor propio; fuera del alcance Claude/Codex.",
+        "No clonar auto-modificación invisible de skills ni llamadas LLM de fondo por defecto."
+      ],
+      "limits": [
+        "Agente independiente, no plugin drop-in para Claude o Codex.",
+        "README declara Windows nativo, pero no instalado ni probado.",
+        "README menciona session search con summarization LLM; implementación actual devuelve mensajes DB reales sin LLM. No heredar descripción histórica.",
+        "No está demostrado que sea el mejor ni el único bucle cerrado."
+      ],
+      "contradictions": [
+        {
+          "extra_claim": "ECC es el único con ciclo completo; Hermes mejor referencia de bucle cerrado.",
+          "finding": "Hermes tiene implementación real de aprendizaje de skills post-turno; exclusividad de ECC no sostenible. 'Mejor' requiere eval comparativa que no existe en esta investigación."
+        }
+      ],
+      "evidence": [
+        {
+          "path": "README.md",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/README.md"
+        },
+        {
+          "path": "LICENSE",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/LICENSE"
+        },
+        {
+          "path": "agent/learn_prompt.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/learn_prompt.py"
+        },
+        {
+          "path": "agent/learning_mutations.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/learning_mutations.py"
+        },
+        {
+          "path": "agent/memory_manager.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/memory_manager.py"
+        },
+        {
+          "path": "agent/background_review.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/background_review.py"
+        },
+        {
+          "path": "agent/turn_finalizer.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/agent/turn_finalizer.py"
+        },
+        {
+          "path": "run_agent.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/run_agent.py"
+        },
+        {
+          "path": "tools/skill_manager_tool.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/tools/skill_manager_tool.py"
+        },
+        {
+          "path": "tools/session_search_tool.py",
+          "url": "https://github.com/NousResearch/hermes-agent/blob/f925b01791fe052e7d55dc975750c0bd985aff91/tools/session_search_tool.py"
+        }
+      ]
+    }
+  ],
+  "unresolved": [
+    "No benchmark comparativo de eficacia o calidad.",
+    "No prueba live de plugins en Claude Code/Codex.",
+    "Pushed_at y estrellas exactas bloqueados por cuota API.",
+    "No afirmar equivalencia de Windows/hosts a partir de un ejecutable o instalador."
+  ],
+  "licensing": "Implementación del kit debe ser original; se atribuyen técnicas. Si se copia código/Markdown sustancial de estos repos MIT, conservar notices. No se ha copiado upstream al kit en esta investigación."
+}

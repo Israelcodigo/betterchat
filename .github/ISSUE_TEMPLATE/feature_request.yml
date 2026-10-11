@@ -1,0 +1,21 @@
+name: Feature request
+description: Propose a concrete improvement with a way to verify it.
+title: "[Feature]: "
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior and alternatives
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: How could we verify it?
+      description: Observable criteria, useful fixtures, or provider/platform requirements.

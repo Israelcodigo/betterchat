@@ -1,0 +1,147 @@
+{
+  "reviewed_at": "2026-10-10",
+  "method": "GitHub web pages; read-only shallow, no-checkout Git clones into TEMP; git show of README, tree, LICENSE and representative implementation. No upstream installation, tests or benchmarks executed.",
+  "scope": "Memory, context recovery, learning and file-based plans from the additional research supplied by the user.",
+  "repositories": [
+    {
+      "repo": "thedotmack/claude-mem",
+      "commit": "fa8ab09f06aa05f958c5225cf3756ce52a3ebb96",
+      "commit_date": "2026-10-09T03:34:34Z",
+      "license": "Apache-2.0; root LICENSE read",
+      "verified": [
+        "Claude hooks register Setup, SessionStart, UserPromptSubmit, PostToolUse, PostToolUseFailure, PreToolUse, Stop and SessionEnd. The Codex manifest registers five of these; it includes commandWindows.",
+        "observation.ts normalizes tool events, excludes recursive memory retrieval, supports project exclusions and subagent filtering, then spools locally or sends to a selected server runtime.",
+        "The worker parses observer output into observations and summaries; SQLite stores structured records. README describes optional Chroma semantic retrieval.",
+        "ContextBudget.ts measures rendered context, removes whole expensive sections/items until it fits a character budget. Progressive search returns compact IDs, then timeline or full observation details."
+      ],
+      "corrections": [
+        "The root Apache-2.0 statement in the extra research is correct at this revision.",
+        "The README's five-hook summary is narrower than its current actual Claude hook manifest.",
+        "Capture is filtered, not literally every tool event. Claude hooks use bash; Windows support is not equivalent to zero dependencies."
+      ],
+      "adopt_original_implementation": "Durable structured observations, short search results with stable IDs, explicit detail retrieval, bounded resume context and recursive-capture suppression.",
+      "discard_or_defer": "Automatic provider-backed summarization, hosted memory, telemetry and global session harvesting; they add cost, configuration and data scope outside the local kit.",
+      "sources": ["README.md", "LICENSE", "plugin/hooks/hooks.json", "plugin/hooks/codex-hooks.json", "src/cli/handlers/observation.ts", "src/services/worker/agents/ResponseProcessor.ts", "src/services/context/ContextBudget.ts", "src/services/worker/search/strategies/SQLiteSearchStrategy.ts"]
+    },
+    {
+      "repo": "rohitg00/agentmemory",
+      "commit": "7ee162844956626d8b00ba459df169d542d4af9d",
+      "commit_date": "2026-10-10T10:02:34Z",
+      "license": "Apache-2.0; root LICENSE read",
+      "verified": [
+        "SearchIndex implements an inverted index and BM25. HybridSearch fuses ranked BM25, vector and structural graph streams with weighted reciprocal-rank fusion.",
+        "The Claude hook manifest contains 12 lifecycle events. Event coverage is reduced for other host adapters.",
+        "Keyless mode uses lexical search; vectors require an embedding provider. Existing structural graph data can still contribute. Local embeddings are opt-in and download a model on first use.",
+        "Native Windows requires manually installing pinned iii-engine v0.22.1. Engine installer contains platform asset hashes. README recommends WSL2 or Docker as alternative paths."
+      ],
+      "corrections": ["BM25 plus embeddings plus graph is capability, not necessarily the default working configuration. Provider-backed compression also requires explicit enabling."],
+      "adopt_original_implementation": "Lexical search as a deterministic default; scoped memory records and explicit provenance. Keep a clear extension boundary for optional future semantic retrieval.",
+      "discard_or_defer": "iii daemon, four-port runtime, embedding models and automatic graph enrichment for the initial Windows-local kit; their benefit has not been independently measured here.",
+      "sources": ["README.md", "LICENSE", "plugin/hooks/hooks.json", "src/state/search-index.ts", "src/state/hybrid-search.ts", "src/functions/search.ts", "src/cli/engine-install.ts"]
+    },
+    {
+      "repo": "mksglu/context-mode",
+      "commit": "8de5f73af9365d459bdfc564c045948cc3fc488b",
+      "commit_date": "2026-10-10T12:06:32Z",
+      "license": "Elastic License 2.0 (ELv2); root LICENSE read",
+      "verified": [
+        "ContentStore chunks content and stores it in SQLite FTS5 for BM25 retrieval; source/session attribution is retained.",
+        "SessionDB persists per-project hook events, session metadata and resume snapshots.",
+        "Snapshot builder returns a table of contents with retrieval references; the Codex SessionStart adapter reads persisted context after compact/resume.",
+        "Executor launches child processes, captures outputs, uses temporary script paths, filtered environment, timeouts and platform process-tree termination. Shell runtime on Windows is Git Bash.",
+        "Security source contains permission pattern and project boundary checks. This review does not establish an OS security isolation boundary."
+      ],
+      "corrections": [
+        "The extra source's vague own-license entry can be resolved: ELv2.",
+        "Do not equate its use of the word sandbox with a verified container or OS sandbox. The inspected executor uses subprocesses and policy checks.",
+        "98 percent context reduction is an upstream claim, not verified by this investigation."
+      ],
+      "adopt_original_implementation": "Generic technique only: keep lengthy tool output in project artifacts, return bounded previews and searchable references, and checkpoint resumable state.",
+      "discard_or_defer": "No source code or prompts copied. Do not bundle ELv2 code into a uniformly permissive kit. No claims of sandbox security or equivalent compression ratios.",
+      "sources": ["README.md", "LICENSE", "src/store.ts", "src/executor.ts", "src/security.ts", "src/session/db.ts", "src/session/snapshot.ts", "hooks/codex/sessionstart.mjs"]
+    },
+    {
+      "repo": "OthmanAdi/planning-with-files",
+      "commit": "7056ed2f2b86a8a9e18840f625ac66a48fa07693",
+      "commit_date": "2026-10-10T09:46:58Z",
+      "license": "MIT; root LICENSE read",
+      "verified": [
+        "task_plan.md, findings.md and progress.md carry file-based working state; lifecycle hooks re-inject selected active-plan context.",
+        "PowerShell and shell scripts exist for initialization, plan resolution, ledger, phase status, completion and SHA-256 attestation.",
+        "check-complete.ps1 is advisory by default. Gate mode is opt-in and bounded by stop_hook_active, a block cap and ledger progress; stalled work can stop.",
+        "Plan attestation compares stored hashes before injection. Automatic recovery reads project files; transcript catchup is a separate explicit mode."
+      ],
+      "corrections": ["A deterministic Stop gate is optional and deliberately does not guarantee every plan is completed; the implementation escapes recursion/stalls."],
+      "adopt_original_implementation": "One canonical durable project state with generated human-readable plan/findings/progress, checkpoint recovery, and bounded continuation.",
+      "discard_or_defer": "Avoid a second independent plan store or multiple conflicting stop hooks. Hashes provide drift evidence rather than proof that a plan is correct.",
+      "sources": ["README.md", "LICENSE", "scripts/check-complete.ps1", "scripts/attest-plan.ps1", "hooks/hooks.json", ".codex/hooks.json"]
+    },
+    {
+      "repo": "vshulcz/deja-vu",
+      "commit": "7e2fa95c95a81a322e29880d3cbfe28dbef6fb26",
+      "commit_date": "2026-10-10T13:24:52Z",
+      "license": "MIT; root LICENSE read",
+      "verified": [
+        "Go implementation indexes local multi-harness session sources and searches them through CLI/MCP; ingest records source and per-file ingestion health.",
+        "Ingestion performs credential-pattern redaction. Secret inspection reports marker kind and location rather than the original secret value.",
+        "README documents native Windows distributions through Scoop, winget and release ZIP. The POSIX install script itself is not the Windows route.",
+        "Default lexical retrieval works without a model/server. Optional embeddings and endpoint probing also exist, despite the short headline emphasizing no embeddings."
+      ],
+      "corrections": ["Local and model-free accurately describes the default retrieval path, not every optional feature."],
+      "adopt_original_implementation": "Stable local IDs, source-aware retrieval, optional explicit import, redaction before persistence, and honest ingestion diagnostics.",
+      "discard_or_defer": "Do not automatically scan all user conversation stores. Do not claim comprehensive secret removal from pattern matching.",
+      "sources": ["README.md", "LICENSE", "internal/index/ingest.go", "internal/index/secrets.go", "internal/search/search.go"]
+    },
+    {
+      "repo": "rohitg00/pro-workflow",
+      "commit": "86d5f2770bd8e1695e40888e4242841eb7cbad4f",
+      "commit_date": "2026-09-29T10:12:10Z",
+      "license": "MIT declared in package.json; no root LICENSE found in tree",
+      "verified": [
+        "learn-capture.js parses explicit [LEARN] tags from last_assistant_message and stores category, rule, mistake and correction in SQLite through createStore.",
+        "session-start.js fetches five recent project learnings and prints the first three, with a LEARNED.md fallback.",
+        "src/db/store.ts uses better-sqlite3 with explicit learning records and usage counters."
+      ],
+      "corrections": [
+        "No license is too absolute: package.json declares MIT, although no full LICENSE was found.",
+        "Every correction automatically becomes a rule overstates the implementation. Capture requires a structured tag emitted in the assistant's final content."
+      ],
+      "adopt_original_implementation": "Structured lessons with evidence and explicit status, rather than opaque automatic self-modification.",
+      "discard_or_defer": "No code copied while license grant text remains unresolved; do not import its rules wholesale.",
+      "sources": ["README.md", "package.json", "scripts/learn-capture.js", "scripts/session-start.js", "src/db/store.ts"]
+    },
+    {
+      "repo": "rebelytics/one-skill-to-rule-them-all",
+      "commit": "56e890712273ce231b478adc56ee2eb81101c3d6",
+      "commit_date": "2026-10-09T16:38:54Z",
+      "license": "CC-BY-4.0; LICENSE.txt read",
+      "verified": [
+        "Task Observer is a Markdown meta-skill with scripts and references, not a training runtime. It records corrections and recurring workflow issues as structured observations.",
+        "New-observation script allocates IDs with collision guards and creates files without overwriting them.",
+        "Review stages candidate skill updates separately. Interactive review asks for each decision; scheduled review may apply non-escalated changes to staged copies. Live installation remains separate."
+      ],
+      "corrections": [
+        "You approve is broadly correct for live activation, but scheduled staged-copy review can run autonomously under its own configured policy.",
+        "Although the skill is Markdown, bundled helper commands are bash-oriented; Windows native execution is not verified."
+      ],
+      "adopt_original_implementation": "Proposal lifecycle with observations, supporting evidence, status and staged promotion; no silent rewriting of live agent instructions.",
+      "discard_or_defer": "Do not impose its broad every-session trigger, scheduled review cadence or approval policy on unrelated tasks. No scheduled automation created.",
+      "sources": ["README.md", "LICENSE.txt", "SKILL.md", "scripts/new-observation.sh", "references/weekly-review.md"]
+    }
+  ],
+  "recommended_design": {
+    "memory": "Single project-local SQLite store, explicit record types and provenance, FTS5 or documented lexical fallback, compact search then detail by ID.",
+    "working_state": "One canonical task graph plus plan/findings/progress views; resume from persisted facts and executable verification receipts.",
+    "context": "Output artifacts and bounded previews, deterministic retrieval, bounded checkpoints; no claim of semantic compression without an actual model call.",
+    "learning": "Evidence-backed proposals and separately approved active rules. Confidence is a heuristic statistic, never a probability or evidence of truth.",
+    "privacy": "Project scope by default, redact before persistence, do not ingest global transcripts automatically.",
+    "integration": "Shared runtime with adapter-specific event contracts; one hook dispatcher and one state store to avoid duplicated capture."
+  },
+  "limitations": [
+    "No upstream test suites executed; test-file presence is not a passing result.",
+    "No performance, retrieval quality, secret-redaction completeness, live host hook behavior or production stability verified.",
+    "No star counts refreshed because feature integration, implementation and licenses were the assigned research scope.",
+    "This is a representative mechanism audit, not a line-by-line security audit of each repository.",
+    "Source links can be constructed as https://github.com/{repo}/blob/{commit}/{source}; all source paths listed were found in the inspected tree."
+  ]
+}

@@ -1,0 +1,13 @@
+include nexo.py
+include CONTRIBUTING.md SECURITY.md
+include .gitattributes
+include README.es.md CHANGELOG.md
+recursive-include docs/assets *.svg
+recursive-include .github *.md
+recursive-include .github *.yml
+recursive-include docs *.md *.json
+recursive-include examples *.py
+recursive-include tests *.py
+recursive-include scripts *.py
+recursive-include scripts *.cjs
+recursive-include docs/evidence *.py
